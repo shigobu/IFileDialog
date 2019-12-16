@@ -44,10 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FolderSelectDialog.cs" />
-    <Compile Include="IFileDialog.cs" />
-    <Compile Include="IModalWindow.cs" />
-    <Compile Include="IShellItem.cs" />
+    <Compile Include="Native\IFileOpenDialog.cs" />
+    <Compile Include="Native\IShellItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
