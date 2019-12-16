@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using COMInterfaceWrapper;
 
 namespace test
 {
@@ -27,7 +28,7 @@ namespace test
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            COMInterfaceWrapper.Native.FolderSelectDialog selectDialog = new COMInterfaceWrapper.Native.FolderSelectDialog();
+            FolderSelectDialog selectDialog = new FolderSelectDialog();
             selectDialog.Path = "::{20D04FE0-3AEA-1069-A2D8-08002B30309D}";
             if (selectDialog.ShowDialog(IntPtr.Zero))
             {
