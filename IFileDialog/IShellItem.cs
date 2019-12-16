@@ -16,7 +16,9 @@ namespace COMInterfaceWrapper.Native
 			string pszPath,
 			IntPtr pbc,
 			[MarshalAs(UnmanagedType.LPStruct)]Guid riid);
-	}
+
+        public const uint ERROR_CANCELLED = 0x800704C7;
+    }
 
 	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	[Guid("43826d1e-e718-42ee-bc55-a1e261c37bfe")]
@@ -28,7 +30,7 @@ namespace COMInterfaceWrapper.Native
 			[MarshalAs(UnmanagedType.LPStruct)]Guid bhid,
 			[MarshalAs(UnmanagedType.LPStruct)]Guid riid);
 		IShellItem GetParent();
-		SafeCoTaskMemHandle GetDisplayName(SIGDN sigdnName);
+		void GetDisplayName(SIGDN sigdnName, [MarshalAs(UnmanagedType.LPWStr)] out string ppszName);
 		SFGAOF GetAttributes(SFGAOF sfgaoMask);
 		int Compare(IShellItem psi, SICHINTF hint);
 	}
@@ -94,27 +96,5 @@ namespace COMInterfaceWrapper.Native
 		SFGAO_STORAGEANCESTOR = 0x00800000,
 		SFGAO_STORAGECAPMASK = 0x70C50008,
 		SFGAO_PKEYSFGAOMASK = 0x81044000,
-	}
-}
-
-internal sealed class SafeCoTaskMemHandle : SafeHandle
-{
-	public SafeCoTaskMemHandle()
-		: base(IntPtr.Zero, true)
-	{
-	}
-
-	public SafeCoTaskMemHandle(IntPtr handle, bool ownsHandle)
-		: base(IntPtr.Zero, ownsHandle)
-	{
-		SetHandle(handle);
-	}
-
-	public override bool IsInvalid => handle == IntPtr.Zero;
-
-	protected override bool ReleaseHandle()
-	{
-		Marshal.FreeCoTaskMem(handle);
-		return true;
 	}
 }

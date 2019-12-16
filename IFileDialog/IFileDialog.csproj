@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FolderSelectDialog.cs" />
     <Compile Include="IFileDialog.cs" />
     <Compile Include="IModalWindow.cs" />
     <Compile Include="IShellItem.cs" />
