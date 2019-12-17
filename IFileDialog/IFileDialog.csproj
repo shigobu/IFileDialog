@@ -46,6 +46,7 @@
     <Compile Include="FolderSelectDialog.cs" />
     <Compile Include="Native\IFileOpenDialog.cs" />
     <Compile Include="Native\IShellItem.cs" />
+    <Compile Include="Native\NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

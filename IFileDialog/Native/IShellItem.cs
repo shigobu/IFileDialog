@@ -8,18 +8,6 @@ using System.Threading.Tasks;
 
 namespace COMInterfaceWrapper.Native
 {
-	[SuppressUnmanagedCodeSecurity]
-	internal static class NativeMethods
-	{
-		[DllImport("shell32.dll", ExactSpelling = true, CharSet = CharSet.Unicode, PreserveSig = false)]
-		public static extern IShellItem SHCreateItemFromParsingName(
-			string pszPath,
-			IntPtr pbc,
-			[MarshalAs(UnmanagedType.LPStruct)]Guid riid);
-
-        public const uint ERROR_CANCELLED = 0x800704C7;
-    }
-
 	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	[Guid("43826d1e-e718-42ee-bc55-a1e261c37bfe")]
 	internal interface IShellItem

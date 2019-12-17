@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using COMInterfaceWrapper.Native;
+using System.Diagnostics;
 
 namespace COMInterfaceWrapper
 {
@@ -23,6 +24,11 @@ namespace COMInterfaceWrapper
             var dlg = new FileOpenDialog() as IFileOpenDialog;
             try
             {
+                if (owner == IntPtr.Zero)
+                {
+                    owner = NativeMethods.GetForegroundWindow();
+                }
+
                 FILEOPENDIALOGOPTIONS option = dlg.GetOptions();
 
                 dlg.SetOptions(option | FILEOPENDIALOGOPTIONS.FOS_PICKFOLDERS);
