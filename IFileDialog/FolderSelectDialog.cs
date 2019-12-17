@@ -55,9 +55,15 @@ namespace COMInterfaceWrapper
                 }
 
                 dlg.GetResult(out item);
-                
-                item.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string name);
-                this.Path = name;
+                try
+                {
+                    item.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string name);
+                    this.Path = name;
+                }
+                catch (ArgumentException ex) when (ex.Message == "値が有効な範囲にありません。")
+                {
+                    throw new Exception("「PC」「ネットワーク」は指定できません。", ex);
+                }
 
                 return true;
             }
