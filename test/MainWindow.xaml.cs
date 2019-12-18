@@ -31,10 +31,10 @@ namespace test
             FolderSelectDialog selectDialog = new FolderSelectDialog();
             selectDialog.Title = "タイトルが設定できます。";
             selectDialog.Path = "::{20D04FE0-3AEA-1069-A2D8-08002B30309D}";
-            IntPtr hWind = new System.Windows.Interop.WindowInteropHelper(this).Handle;
+            IntPtr hWnd = new System.Windows.Interop.WindowInteropHelper(this).Handle;
             try
             {
-                if (selectDialog.ShowDialog(hWind))
+                if (selectDialog.ShowDialog(hWnd))
                 {
                     button1.Content = selectDialog.Path;
                 }

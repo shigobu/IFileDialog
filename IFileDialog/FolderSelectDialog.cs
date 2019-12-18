@@ -14,19 +14,37 @@ namespace COMInterfaceWrapper
         public string Path { get; set; }
         public string Title { get; set; }
 
+        /// <summary>
+        /// フォアグラウンドウィンドウを親にして、ダイアログを表示します。
+        /// </summary>
+        /// <returns>
+        /// 押されたボタンを示します。
+        /// true  = OKボタン
+        /// false = キャンセル または バツボタン
+        /// </returns>
         public bool ShowDialog()
         {
             return ShowDialog(IntPtr.Zero);
         }
 
-        public bool ShowDialog(IntPtr owner)
+        /// <summary>
+        /// 親ウィンドウを指定して、ダイアログを表示します。
+        /// ownerにIntPtr.Zeroを指定した場合、フォアグラウンドウィンドウを親にします。
+        /// </summary>
+        /// <param name="hwndOwner">親ウィンドウのウィンドウハンドル</param>
+        /// <returns>
+        /// 押されたボタンを示します。
+        /// true  = OKボタン
+        /// false = キャンセル または バツボタン
+        /// </returns>
+        public bool ShowDialog(IntPtr hwndOwner)
         {
             var dlg = new FileOpenDialog() as IFileOpenDialog;
             try
             {
-                if (owner == IntPtr.Zero)
+                if (hwndOwner == IntPtr.Zero)
                 {
-                    owner = NativeMethods.GetForegroundWindow();
+                    hwndOwner = NativeMethods.GetForegroundWindow();
                 }
 
                 FILEOPENDIALOGOPTIONS option = dlg.GetOptions();
@@ -44,7 +62,7 @@ namespace COMInterfaceWrapper
                 if (!string.IsNullOrEmpty(this.Title))
                     dlg.SetTitle(this.Title);
 
-                var hr = dlg.Show(owner);
+                var hr = dlg.Show(hwndOwner);
                 if (hr.Equals(NativeMethods.ERROR_CANCELLED))
                 {
                     return false;
@@ -60,9 +78,10 @@ namespace COMInterfaceWrapper
                     item.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string name);
                     this.Path = name;
                 }
-                catch (ArgumentException ex) when (ex.Message == "値が有効な範囲にありません。")
+                catch (ArgumentException ex) when (ex.HResult == -2147024809)
                 {
-                    throw new Exception("「PC」「ネットワーク」は指定できません。", ex);
+                    Path = "";
+                    throw new InvalidOperationException("「PC」「ネットワーク」は指定できません。", ex);
                 }
 
                 return true;
