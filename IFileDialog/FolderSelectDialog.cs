@@ -29,7 +29,7 @@ namespace COMInterfaceWrapper
 
         /// <summary>
         /// 親ウィンドウを指定して、ダイアログを表示します。
-        /// ownerにIntPtr.Zeroを指定した場合、フォアグラウンドウィンドウを親にします。
+        /// hwndOwnerにIntPtr.Zeroを指定した場合、フォアグラウンドウィンドウを親にします。
         /// </summary>
         /// <param name="hwndOwner">親ウィンドウのウィンドウハンドル</param>
         /// <returns>
@@ -62,14 +62,14 @@ namespace COMInterfaceWrapper
                 if (!string.IsNullOrEmpty(this.Title))
                     dlg.SetTitle(this.Title);
 
-                var hr = dlg.Show(hwndOwner);
-                if (hr.Equals(NativeMethods.ERROR_CANCELLED))
+                int hr = dlg.Show(hwndOwner);
+                if (hr == NativeMethods.ERROR_CANCELLED)
                 {
                     return false;
                 }
-                if (!hr.Equals(0))
+                if (hr != NativeMethods.S_OK)
                 {
-                    return false;
+                    Marshal.ThrowExceptionForHR(hr);
                 }
 
                 dlg.GetResult(out item);

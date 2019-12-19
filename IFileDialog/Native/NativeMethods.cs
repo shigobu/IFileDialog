@@ -22,6 +22,8 @@ namespace COMInterfaceWrapper.Native
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
 
-        public const uint ERROR_CANCELLED = 0x800704C7;
+        public static int ERROR_CANCELLED { get; } = BitConverter.ToInt32(BitConverter.GetBytes(0x800704C7), 0);
+
+        public static int S_OK { get; } = 0;
     }
 }

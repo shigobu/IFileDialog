@@ -20,7 +20,7 @@ namespace COMInterfaceWrapper.Native
     internal interface IFileOpenDialog
     {
         [PreserveSig]
-        UInt32 Show([In] IntPtr hwndParent);
+        int Show([In] IntPtr hwndParent);
         void SetFileTypes();     // not fully defined
         void SetFileTypeIndex();     // not fully defined
         void GetFileTypeIndex();     // not fully defined
