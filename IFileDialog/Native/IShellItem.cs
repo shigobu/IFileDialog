@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace COMInterfaceWrapper.Native
 {
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	[Guid("43826d1e-e718-42ee-bc55-a1e261c37bfe")]
 	internal interface IShellItem
 	{
