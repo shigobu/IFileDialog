@@ -44,7 +44,8 @@ namespace COMInterfaceWrapper
 
                 FILEOPENDIALOGOPTIONS option = dlg.GetOptions();
 
-                dlg.SetOptions(option | FILEOPENDIALOGOPTIONS.FOS_PICKFOLDERS);
+                //ファイル選択のオプションと、ファイルシステムのアイテムであることを確認するオプション。PCとネットワークが選択できない。
+                dlg.SetOptions(option | FILEOPENDIALOGOPTIONS.FOS_PICKFOLDERS | FILEOPENDIALOGOPTIONS.FOS_FORCEFILESYSTEM);
 
                 IShellItem item;
                 if (!string.IsNullOrEmpty(this.Path))
@@ -68,16 +69,8 @@ namespace COMInterfaceWrapper
                 }
 
                 dlg.GetResult(out item);
-                try
-                {
-                    item.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string name);
-                    this.Path = name;
-                }
-                catch (ArgumentException ex) when (ex.HResult == -2147024809)
-                {
-                    Path = "";
-                    throw new InvalidOperationException("「PC」「ネットワーク」は指定できません。", ex);
-                }
+                item.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string name);
+                this.Path = name;
 
                 return true;
             }
