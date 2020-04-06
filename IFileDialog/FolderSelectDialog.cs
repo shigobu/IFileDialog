@@ -56,7 +56,9 @@ namespace COMInterfaceWrapper
                 }
 
                 if (!string.IsNullOrEmpty(this.Title))
+                {
                     dlg.SetTitle(this.Title);
+                }
 
                 int hr = dlg.Show(hwndOwner);
                 if (hr == NativeMethods.ERROR_CANCELLED)
